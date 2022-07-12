@@ -49,7 +49,7 @@ public class ProductResource {
   @POST
   @Blocking
   public Uni<Response> create(Product product) {
-    return Product.save(client, product.getName())
+    return Product.save(client, product.getName(), product.getValue())
         .onItem()
         .transform(id -> URI.create("/products/" + id))
         .onItem()
@@ -71,10 +71,12 @@ public class ProductResource {
   //this will populate the database for development purpose
   private void initdb() {
     client.query("DROP TABLE IF EXISTS products").execute()
-        .flatMap(m-> client.query("CREATE TABLE products (id SERIAL PRIMARY KEY, " +
-            "name TEXT NOT NULL)").execute())
-        .flatMap(m-> client.query("INSERT INTO products (name) VALUES('product1')").execute())
-        .flatMap(m-> client.query("INSERT INTO products (name) VALUES('product2')").execute())
+        .flatMap(p-> client.query("CREATE TABLE products (id SERIAL PRIMARY KEY, " +
+            "name TEXT NOT NULL, " + "value INT NOT NULL)").execute())
+        .flatMap(p-> client.query("INSERT INTO products (name, value) VALUES('product1', 10);")
+            .execute())
+        .flatMap(m-> client.query("INSERT INTO products (name, value) VALUES('product2', 20);")
+            .execute())
         .await()
         .indefinitely();
   }

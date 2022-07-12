@@ -1,5 +1,7 @@
 package org.eloware.model;
 
+import java.math.BigDecimal;
+
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 
@@ -11,7 +13,7 @@ public class Product {
 
   private Long id;
   private String name;
-//  private BigDecimal value;
+  private Integer value;
 
 
   /**
@@ -29,6 +31,16 @@ public class Product {
     this.name = name;
   }
 
+  public Product(String name, Integer value) {
+    this.name = name;
+    this.value = value;
+  }
+
+  public Product(Long id, String name, Integer value) {
+    this.id = id;
+    this.name = name;
+    this.value = value;
+  }
 
   /**
   * Getter and Setter
@@ -49,7 +61,13 @@ public class Product {
     this.name = name;
   }
 
+  public Integer getValue() {
+    return value;
+  }
 
+  public void setValue(Integer value) {
+    this.value = value;
+  }
 
   /**
   * Methods
@@ -57,7 +75,7 @@ public class Product {
   public static Multi<Product> findAll(PgPool client) {
 
     return client
-        .query("SELECT id, name FROM products ORDER BY name DESC")
+        .query("SELECT id, name, value FROM products ORDER BY name DESC")
         .execute()
         .onItem()
         .transformToMulti(set -> Multi.createFrom().iterable(set))
@@ -68,17 +86,17 @@ public class Product {
 
   public static Uni<Product> findById(PgPool client, Long id) {
     return client
-        .preparedQuery("SELECT id, name FROM products WHERE id = $1")
+        .preparedQuery("SELECT id, name, value FROM products WHERE id = $1")
         .execute(Tuple.of(id))
         .onItem()
         .transform(p -> p.iterator().hasNext() ? from(p.iterator().next()) : null);
   }
 
 
-  public static Uni<Long> save(PgPool client, String name) {
+  public static Uni<Long> save(PgPool client, String name, Integer value ) {
     return client
-        .preparedQuery("INSERT INTO products (name) VALUES ($1) RETURNING id")
-        .execute(Tuple.of(name))
+        .preparedQuery("INSERT INTO products (name, value) VALUES ($1, $2) RETURNING id")
+        .execute(Tuple.of(name, value))
         .onItem()
         .transform(p -> p.iterator().next().getLong("id"));
   }
@@ -94,7 +112,7 @@ public class Product {
 
 
   private static Product from(Row row) {
-    return new Product(row.getLong("id"), row.getString("name"));
+    return new Product(row.getLong("id"), row.getString("name"), row.getInteger("value"));
   }
 
 }
