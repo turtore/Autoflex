@@ -6,7 +6,6 @@ import io.vertx.mutiny.pgclient.PgPool;
 
 import io.smallrye.mutiny.Multi;
 import java.net.URI;
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -22,11 +21,6 @@ public class ProductResource {
   @Inject
   PgPool client;
 
-  //schema required for postgress
-  @PostConstruct
-  void config() {
-    initdb();
-  }
 
   @GET
   @Blocking
@@ -66,19 +60,6 @@ public class ProductResource {
         .transform(deleted -> deleted ? Response.Status.NO_CONTENT : Response.Status.NOT_FOUND)
         .onItem()
         .transform(status -> Response.status(status).build());
-  }
-
-  //this will populate the database for development purpose
-  private void initdb() {
-    client.query("DROP TABLE IF EXISTS products").execute()
-        .flatMap(p-> client.query("CREATE TABLE products (id SERIAL PRIMARY KEY, " +
-            "name TEXT NOT NULL, " + "value INT NOT NULL)").execute())
-        .flatMap(p-> client.query("INSERT INTO products (name, value) VALUES('product1', 10);")
-            .execute())
-        .flatMap(m-> client.query("INSERT INTO products (name, value) VALUES('product2', 20);")
-            .execute())
-        .await()
-        .indefinitely();
   }
 
 }
