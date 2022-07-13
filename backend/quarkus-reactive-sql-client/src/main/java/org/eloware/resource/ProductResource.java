@@ -22,11 +22,15 @@ public class ProductResource {
   PgPool client;
 
 
+  /**
+  * Endpoints.
+  */
   @GET
   @Blocking
   public Multi<Product> getAll() {
     return Product.findAll(client);
   }
+
 
   @GET
   @Blocking
@@ -39,6 +43,7 @@ public class ProductResource {
         .onItem()
         .transform(Response.ResponseBuilder::build);
   }
+
 
   @POST
   @Blocking
@@ -57,7 +62,8 @@ public class ProductResource {
   public Uni<Response> delete(@PathParam("id") Long id) {
     return Product.delete(client, id)
         .onItem()
-        .transform(deleted -> deleted ? Response.Status.NO_CONTENT : Response.Status.NOT_FOUND)
+        .transform(deleted -> deleted ? Response.Status.NO_CONTENT
+            : Response.Status.NOT_FOUND)
         .onItem()
         .transform(status -> Response.status(status).build());
   }

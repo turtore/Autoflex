@@ -7,6 +7,9 @@ import io.vertx.mutiny.pgclient.PgPool;
 import io.vertx.mutiny.sqlclient.Row;
 import io.vertx.mutiny.sqlclient.Tuple;
 
+/**
+* Product class.
+*/
 public class Product {
 
   private Long id;
@@ -15,7 +18,7 @@ public class Product {
 
 
   /**
-  * Constructor
+  * Constructor.
   */
   public Product() {
   }
@@ -71,9 +74,9 @@ public class Product {
   * Methods
   */
   public static Multi<Product> findAll(PgPool client) {
-
     return client
-        .query("SELECT product_id, product_name, product_value FROM products ORDER BY product_name DESC")
+        .query("SELECT product_id, product_name, product_value "
+            + "FROM products ORDER BY product_name DESC")
         .execute()
         .onItem()
         .transformToMulti(set -> Multi.createFrom().iterable(set))
@@ -84,7 +87,8 @@ public class Product {
 
   public static Uni<Product> findById(PgPool client, Long id) {
     return client
-        .preparedQuery("SELECT product_id, product_name, product_value FROM products WHERE product_id = $1")
+        .preparedQuery("SELECT product_id, product_name, product_value "
+            + "FROM products WHERE product_id = $1")
         .execute(Tuple.of(id))
         .onItem()
         .transform(p -> p.iterator().hasNext() ? from(p.iterator().next()) : null);
@@ -93,7 +97,8 @@ public class Product {
 
   public static Uni<Long> save(PgPool client, String name, Integer value ) {
     return client
-        .preparedQuery("INSERT INTO products (product_name, product_value) VALUES ($1, $2) RETURNING product_id")
+        .preparedQuery("INSERT INTO products "
+            + "(product_name, product_value) VALUES ($1, $2) RETURNING product_id")
         .execute(Tuple.of(name, value))
         .onItem()
         .transform(p -> p.iterator().next().getLong("product_id"));
@@ -110,7 +115,9 @@ public class Product {
 
 
   private static Product from(Row row) {
-    return new Product(row.getLong("product_id"), row.getString("product_name"), row.getInteger("product_value"));
+    return new Product(row.getLong("product_id"), row.getString("product_name"),
+        row.getInteger("product_value"));
   }
+
 
 }
