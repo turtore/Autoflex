@@ -26,14 +26,14 @@ public class ProductResource {
   * Endpoints.
   */
   @GET
-  @Blocking
+//  @Blocking
   public Multi<Product> getAll() {
     return Product.findAll(client);
   }
 
 
   @GET
-  @Blocking
+//  @Blocking
   @Path("/{id}")
   public Uni<Response> getById(@PathParam("id") Long id) {
     return Product.findById(client, id)
@@ -46,7 +46,7 @@ public class ProductResource {
 
 
   @POST
-  @Blocking
+//  @Blocking
   public Uni<Response> create(Product product) {
     return Product.save(client, product.getName(), product.getValue())
         .onItem()
@@ -57,7 +57,7 @@ public class ProductResource {
 
 
   @DELETE
-  @Blocking
+//  @Blocking
   @Path("/{id}")
   public Uni<Response> delete(@PathParam("id") Long id) {
     return Product.delete(client, id)
