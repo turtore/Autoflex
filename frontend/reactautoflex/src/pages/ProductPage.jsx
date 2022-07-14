@@ -34,7 +34,12 @@ const ProductPage = () => {
       name: inputsState.name,
       value: inputsState.value,
     };
-    console.log(product);
+    productsAPI('registerProduct', product)
+  }
+
+  const handleDelete = (id) => {
+    productsAPI('deleteProduct', id)
+
   }
     
 
@@ -62,6 +67,18 @@ const ProductPage = () => {
       >
           register
       </button>
+
+      <ul>
+        { products.map((product) => 
+        <div>
+            <li>{product.name} | {product.value}</li>
+            <button
+            id={product.id}
+            onClick={ () => handleDelete(`${product.id}`) }
+            >delete</button>
+        </div>
+        )}        
+      </ul>
       
     </div>
   )

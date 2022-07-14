@@ -19,6 +19,12 @@ export default async function productsAPI(caseInput, bodyValue) {
     });
     return allProducts;
   }
+  case 'deleteProduct': {
+    const deleted = await axios({ method: 'delete',
+    url: `http://localhost:8080/products/${bodyValue}`,
+  });
+  }
+  
   default:
     return console.log('missing args');
   }
