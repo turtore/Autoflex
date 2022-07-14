@@ -1,11 +1,26 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import Context from '../context/Context';
+import productsAPI from '../services/productsAPI';
+
+
+const requestAllProducts = async(setProducts) => {
+  const productsList = await productsAPI('getProducts');
+  setProducts(productsList.data);
+  console.log(productsList);
+}
 
 const ProductPage = () => {
+
+  const { setProducts, products } = useContext(Context)
 
   const [inputsState, setInputsState] = useState({
     name: '',
     value: '',
   });
+
+  useEffect(() => {
+    requestAllProducts(setProducts);
+  }, setProducts)
 
   const handleChange = ({ target: { name, value } }) => {
     setInputsState({
