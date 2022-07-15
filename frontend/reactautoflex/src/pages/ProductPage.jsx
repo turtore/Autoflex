@@ -68,14 +68,23 @@ const ProductPage = () => {
           register
       </button>
 
-      <ul>
+      <br/>
+      <br/>
+
+      <label htmlFor="products">Produtos: </label>
+      <ul
+      className='products'
+      >
         { products.map((product) => 
         <div>
-            <li>{product.name} | {product.value}</li>
+            <li>
+                [Id] {product.id} [Name] {product.name} [Value] {product.value} |
             <button
             id={product.id}
             onClick={ () => handleDelete(`${product.id}`) }
-            >delete</button>
+            >
+                delete</button>
+            </li>
         </div>
         )}        
       </ul>
