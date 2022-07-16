@@ -99,11 +99,23 @@ public class Ingredient {
   }
 
 
+  public static Multi<Ingredient> findByProduct(PgPool client, Integer id) {
+    return client
+        .preparedQuery("SELECT ingredient_id, ingredient_quantity, product_id, material_id "
+            + "FROM ingredients "
+            + "WHERE product_id = $1")
+        .execute(Tuple.of(id))
+        .onItem()
+        .transformToMulti(set -> Multi.createFrom().iterable(set))
+        .onItem()
+        .transform(Ingredient::from);
+  }
+
   public static Uni<Integer> save
       (PgPool client, Integer quantity, Integer productId, Integer materialId ) {
-//    if (name.trim().equals("") || value <= 0) {
-//      throw new InvalidDataException();
-//    }
+    if (quantity <= 0) {
+      throw new InvalidDataException();
+    }
 
     return client
         .preparedQuery("INSERT INTO ingredients (ingredient_quantity, product_id, material_id) "
@@ -146,5 +158,6 @@ public class Ingredient {
     return new Ingredient(row.getInteger("ingredient_id"), row.getInteger("ingredient_quantity"),
         row.getInteger("product_id"),row.getInteger("material_id"));
   }
+
 
 }

@@ -43,6 +43,13 @@ public class IngredientResource {
         .transform(Response.ResponseBuilder::build);
   }
 
+  @GET
+  @Path("/{id}/product")
+  public Multi<Ingredient> findByProduct(@PathParam("id") Integer id) {
+    return Ingredient.findByProduct(client, id);
+
+  }
+
 
   @POST
   @Blocking
