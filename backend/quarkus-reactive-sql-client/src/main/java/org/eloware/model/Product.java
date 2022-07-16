@@ -6,6 +6,7 @@ import io.smallrye.mutiny.Uni;
 import io.vertx.mutiny.pgclient.PgPool;
 import io.vertx.mutiny.sqlclient.Row;
 import io.vertx.mutiny.sqlclient.Tuple;
+import org.eloware.exception.InvalidDataException;
 
 /**
 * Product class.
@@ -95,13 +96,41 @@ public class Product {
   }
 
 
+  public static Uni<Product> findByName(PgPool client, String name) {
+    return client
+        .preparedQuery("SELECT product_id, product_name, product_value "
+            + "FROM products WHERE product_name = $1")
+        .execute(Tuple.of(name))
+        .onItem()
+        .transform(p -> p.iterator().hasNext() ? from(p.iterator().next()) : null);
+  }
+
+
   public static Uni<Long> save(PgPool client, String name, Integer value ) {
+
+    if (name.equals(null) || value.equals(null) || name.trim().equals("")) {
+      throw new InvalidDataException();
+    }
+
     return client
         .preparedQuery("INSERT INTO products "
             + "(product_name, product_value) VALUES ($1, $2) RETURNING product_id")
         .execute(Tuple.of(name, value))
         .onItem()
         .transform(p -> p.iterator().next().getLong("product_id"));
+  }
+
+
+  public static Uni<Tuple> update(PgPool client, String name, Long id ) {
+
+    if (name.equals(null) || name.trim().equals("")) {
+      throw new InvalidDataException();
+    }
+
+    return client
+        .preparedQuery("UPDATE products SET product_name = $1 WHERE product_id = $2")
+        .execute(Tuple.of(name, id))
+        .replaceWith(Tuple.of(name, id));
   }
 
 

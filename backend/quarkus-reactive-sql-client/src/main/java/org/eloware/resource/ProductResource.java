@@ -1,6 +1,5 @@
 package org.eloware.resource;
 
-import io.smallrye.common.annotation.Blocking;
 import io.smallrye.mutiny.Uni;
 import io.vertx.mutiny.pgclient.PgPool;
 
@@ -10,6 +9,7 @@ import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
@@ -43,6 +43,18 @@ public class ProductResource {
         .onItem()
         .transform(Response.ResponseBuilder::build);
   }
+  @GET
+//  @Blocking
+  @Path("/name/{name}")
+  public Uni<Response> getByName(@PathParam("name") String name) {
+    return Product.findByName(client, name)
+        .onItem()
+        .transform(product -> product != null ? Response.ok(product)
+            : Response.status(Response.Status.NOT_FOUND))
+        .onItem()
+        .transform(Response.ResponseBuilder::build);
+  }
+
 
 
   @POST
@@ -53,6 +65,20 @@ public class ProductResource {
         .transform(id -> URI.create("/products/" + id))
         .onItem()
         .transform(uri -> Response.created(uri).build());
+  }
+
+  @PUT
+  @Path("/{id}")
+  public Uni<Response> update(@PathParam("id") Long id, Product product) {
+    return Product.update(client, product.getName(), id)
+        .onItem()
+        .transform(uri -> Response.ok().build());
+
+
+//        .transform(updated -> updated.equals(product) ? Response.Status.NO_CONTENT
+//            : Response.Status.NOT_FOUND)
+//        .onItem()
+//        .transform(status -> Response.status(status).build());
   }
 
 
