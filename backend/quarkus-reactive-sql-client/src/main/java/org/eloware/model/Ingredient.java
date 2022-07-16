@@ -1,11 +1,13 @@
 package org.eloware.model;
 
+import org.eloware.exception.InvalidDataException;
+
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import io.vertx.mutiny.pgclient.PgPool;
 import io.vertx.mutiny.sqlclient.Row;
 import io.vertx.mutiny.sqlclient.Tuple;
-import org.eloware.exception.InvalidDataException;
+
 
 /**
  * Product class.

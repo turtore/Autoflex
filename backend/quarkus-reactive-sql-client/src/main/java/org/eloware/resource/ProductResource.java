@@ -1,9 +1,10 @@
 package org.eloware.resource;
 
+import org.eloware.model.Product;
+
 import io.smallrye.common.annotation.Blocking;
 import io.smallrye.mutiny.Uni;
 import io.vertx.mutiny.pgclient.PgPool;
-
 import io.smallrye.mutiny.Multi;
 import java.net.URI;
 import javax.inject.Inject;
@@ -14,8 +15,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
-
-import org.eloware.model.Product;
 
 
 @Path("/products")
