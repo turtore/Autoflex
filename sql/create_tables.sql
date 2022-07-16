@@ -17,10 +17,11 @@ CREATE TABLE IF NOT EXISTS materials (
 
 -- Creation of ingredient table
 CREATE TABLE IF NOT EXISTS ingredients (
-  ingredient_id SERIAL PRIMARY KEY,
+  ingredient_id SERIAL,
+  PRIMARY KEY(product_id, material_id),
   ingredient_quantity INT NOT NULL,
-  product_id INT NOT NULL UNIQUE,
-  material_id INT NOT NULL UNIQUE,
+  product_id INT NOT NULL,
+  material_id INT NOT NULL,
       FOREIGN KEY(product_id) 
 	  REFERENCES products(product_id),
       FOREIGN KEY(material_id) 

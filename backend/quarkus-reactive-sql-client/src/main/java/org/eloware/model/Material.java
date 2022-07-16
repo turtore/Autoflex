@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
 
 
 /**
-* Product class.
+* Material class.
 */
 public class Material {
 
