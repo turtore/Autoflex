@@ -24,17 +24,18 @@ class ProductResourceTest {
   @DisplayName("1 - Should get a list of all products")
   @Order(1)
   void getAllTest() {
+
     given()
         .when().get("/products")
         .then()
-        .statusCode(200)
-        .body("$.size()", is( 3));
+        .statusCode(200);
   }
 
   @Test
   @DisplayName("2 - Should get the correct product by id")
   @Order(2)
   void getByIdTest() {
+
     given()
         .when().get("/products/2")
         .then()
@@ -48,7 +49,7 @@ class ProductResourceTest {
   }
 
   @Test
-  @DisplayName("3 - Should register a new product")
+  @DisplayName("3 - Should receive a error when register a duplicated product")
   @Order(3)
   void create() {
     Product productTest = new Product("product1", 10);
@@ -63,7 +64,7 @@ class ProductResourceTest {
   }
 
   @Test
-  @DisplayName("4 - Should delete a product")
+  @DisplayName("4 - Should get notfound when asked to delete a product that doesnt exists")
   @Order(4)
   void delete() {
 
@@ -73,4 +74,20 @@ class ProductResourceTest {
         .then()
         .statusCode(404);
   }
+
+  @Test
+  @DisplayName("5 - Should update a product")
+  @Order(5)
+  void update() {
+    Product productTest = new Product("product1", 10);
+
+    given()
+        .when()
+        .body(productTest)
+        .contentType(ContentType.JSON)
+        .put("/products/1")
+        .then()
+        .statusCode(200);
+  }
+
 }
