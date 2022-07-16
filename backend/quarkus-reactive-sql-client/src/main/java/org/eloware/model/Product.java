@@ -1,11 +1,14 @@
 package org.eloware.model;
 
+import org.eloware.exception.InvalidDataException;
+
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
-
 import io.vertx.mutiny.pgclient.PgPool;
 import io.vertx.mutiny.sqlclient.Row;
 import io.vertx.mutiny.sqlclient.Tuple;
+import javax.ws.rs.core.Response;
+
 
 /**
 * Product class.
@@ -43,6 +46,7 @@ public class Product {
     this.value = value;
   }
 
+
   /**
   * Getter and Setter
   */
@@ -70,13 +74,15 @@ public class Product {
     this.value = value;
   }
 
+
   /**
-  * Methods
+  * Reactive Methods.
   */
   public static Multi<Product> findAll(PgPool client) {
     return client
         .query("SELECT product_id, product_name, product_value "
-            + "FROM products ORDER BY product_name DESC")
+            + "FROM products "
+            + "ORDER BY product_value DESC")
         .execute()
         .onItem()
         .transformToMulti(set -> Multi.createFrom().iterable(set))
@@ -88,7 +94,8 @@ public class Product {
   public static Uni<Product> findById(PgPool client, Long id) {
     return client
         .preparedQuery("SELECT product_id, product_name, product_value "
-            + "FROM products WHERE product_id = $1")
+            + "FROM products "
+            + "WHERE product_id = $1")
         .execute(Tuple.of(id))
         .onItem()
         .transform(p -> p.iterator().hasNext() ? from(p.iterator().next()) : null);
@@ -96,21 +103,70 @@ public class Product {
 
 
   public static Uni<Long> save(PgPool client, String name, Integer value ) {
+    if (name.trim().equals("") || value <= 0) {
+      throw new InvalidDataException();
+    }
+
     return client
-        .preparedQuery("INSERT INTO products "
-            + "(product_name, product_value) VALUES ($1, $2) RETURNING product_id")
+        .preparedQuery("INSERT INTO products (product_name, product_value) "
+            + "VALUES ($1, $2) "
+            + "RETURNING product_id")
         .execute(Tuple.of(name, value))
         .onItem()
         .transform(p -> p.iterator().next().getLong("product_id"));
   }
 
 
+  public static Uni<Tuple> update(PgPool client, String name, Integer value, Long id ) {
+    if (name.trim().equals("")) {
+      throw new InvalidDataException();
+    }
+
+    return client
+        .preparedQuery("UPDATE products "
+            + "SET product_name = $1, product_value = $2 "
+            + "WHERE product_id = $3")
+        .execute(Tuple.of(name, value, id))
+        .replaceWith(Tuple.of(name, value, id));
+  }
+
+
   public static Uni<Boolean> delete(PgPool client, Long id) {
     return client
-        .preparedQuery("DELETE FROM products WHERE product_id= $1")
+        .preparedQuery("DELETE FROM products "
+            + "WHERE product_id= $1")
         .execute(Tuple.of(id))
         .onItem()
         .transform(p -> p.rowCount() == 1);
+  }
+
+  /**
+   * Util.
+   */
+  public static Uni<Response> existsByName(PgPool client, String name) {
+    return client
+        .preparedQuery("SELECT product_id, product_name, product_value "
+            + "FROM products "
+            + "WHERE product_name = $1")
+        .execute(Tuple.of(name))
+        .onItem()
+        .transform(p -> p.rowCount() > 0)
+        .onItem()
+        .transform(product -> product != null ? Response.ok(product)
+          : Response.status(Response.Status.NOT_FOUND))
+        .onItem()
+        .transform(Response.ResponseBuilder::build);
+  }
+
+
+  public static Uni<Product> existsById(PgPool client, Long id) {
+    return client
+        .preparedQuery("SELECT product_id, product_name, product_value "
+            + "FROM products "
+            + "WHERE product_id = $1")
+        .execute(Tuple.of(id))
+        .onItem()
+        .transform(p -> p.iterator().hasNext() ? from(p.iterator().next()) : null);
   }
 
 
