@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Container, Button } from 'react-bootstrap';
+import ProductCard from '../components/ProductCard';
 import Context from '../context/Context';
 import productsAPI from '../services/productsAPI';
 
@@ -20,7 +22,7 @@ const ProductPage = () => {
 
   useEffect(() => {
     requestAllProducts(setProducts);
-  }, setProducts)
+  }, [setProducts])
 
   const handleChange = ({ target: { name, value } }) => {
     setInputsState({
@@ -37,11 +39,6 @@ const ProductPage = () => {
     productsAPI('registerProduct', product)
   }
 
-  const handleDelete = (id) => {
-    productsAPI('deleteProduct', id)
-
-  }
-    
 
   return (
     <div>
@@ -62,32 +59,19 @@ const ProductPage = () => {
         name="value"
       />
 
-      <button
+      <Button
         onClick={handleClick}
       >
           register
-      </button>
+      </Button>
 
       <br/>
       <br/>
 
-      <label htmlFor="products">Produtos: </label>
-      <ul
-      className='products'
-      >
-        { products.map((product) => 
-        <div>
-            <li>
-                [Id] {product.id} [Name] {product.name} [Value] {product.value} |
-            <button
-            id={product.id}
-            onClick={ () => handleDelete(`${product.id}`) }
-            >
-                delete</button>
-            </li>
-        </div>
-        )}        
-      </ul>
+        { products.map((product) => (
+          <ProductCard key={ product.id } product = { product } />
+        )
+        )}
       
     </div>
   )

@@ -19,7 +19,7 @@ export default async function productsAPI(caseInput, bodyValue) {
     });
     return allProducts;
   }
-  case 'deleteProduct': {
+  case 'DELETE-PRODUCT': {
     const deleted = await axios({ method: 'delete',
     url: `http://localhost:8080/products/${bodyValue}`,
   });
