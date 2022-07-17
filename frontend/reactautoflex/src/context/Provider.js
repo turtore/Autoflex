@@ -3,6 +3,7 @@ import Context from './Context';
 
 function Provider({ children }) {
     const [products, setProducts] = useState([]);
+    const [selectedProduct, setSelectedProduct] = useState([]);
     const [materials, setMaterials] = useState([]);
     const [ingredients, setIngredients] = useState([]);
     
@@ -14,6 +15,8 @@ function Provider({ children }) {
       setMaterials,
       ingredients,
       setIngredients,
+      selectedProduct,
+      setSelectedProduct
     };
   
 

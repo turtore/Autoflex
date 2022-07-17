@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default async function productsAPI(caseInput, bodyValue) {
   switch (caseInput) {
-  case 'registerProduct': {
+  case 'REGISTER-PRODUCT': {
     try {
       const newProduct = await axios({ method: 'post',
         url: 'http://localhost:8080/products',
@@ -13,13 +13,19 @@ export default async function productsAPI(caseInput, bodyValue) {
       return console.log("error");;
     }
   }
-  case 'getProducts': {
+  case 'GET-PRODUCTS': {
     const allProducts = await axios({ method: 'get',
       url: 'http://localhost:8080/products',
     });
     return allProducts;
   }
-  case 'deleteProduct': {
+  case 'GET-PRODUCT-ID': {
+    const product = await axios({ method: 'get',
+      url: `http://localhost:8080/products/${bodyValue}`,
+    });
+    return product;
+  }
+  case 'DELETE-PRODUCT': {
     const deleted = await axios({ method: 'delete',
     url: `http://localhost:8080/products/${bodyValue}`,
   });

@@ -1,10 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Container, Button, Form, FloatingLabel } from 'react-bootstrap';
+import ProductCard from '../components/ProductCard';
 import Context from '../context/Context';
 import productsAPI from '../services/productsAPI';
+import NavbarComponent from '../components/NavbarComponent';
 
 
 const requestAllProducts = async(setProducts) => {
-  const productsList = await productsAPI('getProducts');
+  const productsList = await productsAPI('GET-PRODUCTS');
   setProducts(productsList.data);
   console.log(productsList);
 }
@@ -20,7 +23,7 @@ const ProductPage = () => {
 
   useEffect(() => {
     requestAllProducts(setProducts);
-  }, setProducts)
+  }, [setProducts])
 
   const handleChange = ({ target: { name, value } }) => {
     setInputsState({
@@ -34,62 +37,55 @@ const ProductPage = () => {
       name: inputsState.name,
       value: inputsState.value,
     };
-    productsAPI('registerProduct', product)
+    productsAPI('REGISTER-PRODUCT', product)
   }
 
-  const handleDelete = (id) => {
-    productsAPI('deleteProduct', id)
-
-  }
-    
 
   return (
-    <div>
-      <h2>Register a new Product</h2>
-      <label htmlFor="name">Name: </label>
-      <input
-        type="text"
-        onChange={handleChange}
-        value={inputsState.name}
-        name="name"
-      />
+    <Container>
+      <NavbarComponent />
+        <Container>
+          <FloatingLabel
+          label='Register a new Product'/>
+          <Form>
+            <FloatingLabel
+              label='Name'
+            />
+            <Form.Control
+              type='text'
+              onChange={handleChange}
+              value={inputsState.name}
+              name='name'
+            />
 
-      <label htmlFor="value">Value: </label>
-      <input
-        type="number"
-        onChange={handleChange}
-        value={inputsState.value}
-        name="value"
-      />
-
-      <button
-        onClick={handleClick}
-      >
-          register
-      </button>
-
-      <br/>
-      <br/>
-
-      <label htmlFor="products">Produtos: </label>
-      <ul
-      className='products'
-      >
-        { products.map((product) => 
-        <div>
-            <li>
-                [Id] {product.id} [Name] {product.name} [Value] {product.value} |
-            <button
-            id={product.id}
-            onClick={ () => handleDelete(`${product.id}`) }
-            >
-                delete</button>
-            </li>
-        </div>
-        )}        
-      </ul>
-      
-    </div>
+            <FloatingLabel
+              label='Value'
+            />
+            <Form.Control
+              type='number'
+              onChange={handleChange}
+              value={inputsState.value}
+              name='value'
+            />
+          </Form>
+        
+          <Button
+            onClick={handleClick}
+          >
+            Register
+          </Button>
+        </Container>
+        <br/>
+        <FloatingLabel
+          label='Registered Products'
+        />
+        <Container>
+        { products.map((product) => (
+          <ProductCard key={ product.id } product = { product } />
+          )
+          )}      
+        </Container>
+    </Container>
   )
 }
 
