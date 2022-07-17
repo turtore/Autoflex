@@ -1,53 +1,46 @@
-import React, { useState, useContext } from 'react';
-import { Card, Button, Form } from 'react-bootstrap';
-import Context from '../context/Context';
+import React from 'react';
+import { Card, Button } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import productsAPI from '../services/productsAPI';
 
 const ProductCard = ({ product }) => {
-  const { productsItems,
-    setProductsItems,
-  } = useContext(Context);
 
+  const history = useHistory()
 
-  const changeCartItems = (quantity) => {
-    const filterProduct = productsItems.filter(({ id }) => id !== product.id);
-
-    setProductsItems([
-      ...filterProduct,
-      { ...product, quantity },
-    ]);
-  };
+  const goToDetails = (id) => {
+    history.push(`/products/${id}`)
+  }
 
   const handleDelete = (id) => {
     productsAPI('DELETE-PRODUCT', id)
 
   }
   
-  const logOut = () => {
-    console.log("cliquei no card");
-  }
 
   return (
     <Card className="product-card"
-    onClick={logOut}
+      onClick={() => goToDetails(`${product.id}`)}
     >
       <Card.Body>
+        <Button>
+
         <Card.Title>
-          { product.name }
+          name: { product.name }
         </Card.Title>
         <Card.Text>
-          { product.id }
+          id: { product.id }
         </Card.Text>
         <Card.Text>
-          { product.value }
+          value: { product.value }
         </Card.Text>
 
         <Button
-          type="button"
+          type='button'
           onClick={ () => handleDelete(`${product.id}`) }
-        >
+          >
           Delete
         </Button>
+            </Button>
       </Card.Body>
     </Card>
   );

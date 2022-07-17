@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Container, Button } from 'react-bootstrap';
+import { Container, Button, Form, FloatingLabel } from 'react-bootstrap';
 import ProductCard from '../components/ProductCard';
 import Context from '../context/Context';
 import productsAPI from '../services/productsAPI';
+import NavbarComponent from '../components/NavbarComponent';
 
 
 const requestAllProducts = async(setProducts) => {
-  const productsList = await productsAPI('getProducts');
+  const productsList = await productsAPI('GET-PRODUCTS');
   setProducts(productsList.data);
   console.log(productsList);
 }
@@ -36,44 +37,55 @@ const ProductPage = () => {
       name: inputsState.name,
       value: inputsState.value,
     };
-    productsAPI('registerProduct', product)
+    productsAPI('REGISTER-PRODUCT', product)
   }
 
 
   return (
-    <div>
-      <h2>Register a new Product</h2>
-      <label htmlFor="name">Name: </label>
-      <input
-        type="text"
-        onChange={handleChange}
-        value={inputsState.name}
-        name="name"
-      />
+    <Container>
+      <NavbarComponent />
+        <Container>
+          <FloatingLabel
+          label='Register a new Product'/>
+          <Form>
+            <FloatingLabel
+              label='Name'
+            />
+            <Form.Control
+              type='text'
+              onChange={handleChange}
+              value={inputsState.name}
+              name='name'
+            />
 
-      <label htmlFor="value">Value: </label>
-      <input
-        type="number"
-        onChange={handleChange}
-        value={inputsState.value}
-        name="value"
-      />
-
-      <Button
-        onClick={handleClick}
-      >
-          register
-      </Button>
-
-      <br/>
-      <br/>
-
+            <FloatingLabel
+              label='Value'
+            />
+            <Form.Control
+              type='number'
+              onChange={handleChange}
+              value={inputsState.value}
+              name='value'
+            />
+          </Form>
+        
+          <Button
+            onClick={handleClick}
+          >
+            Register
+          </Button>
+        </Container>
+        <br/>
+        <FloatingLabel
+          label='Registered Products'
+        />
+        <Container>
         { products.map((product) => (
           <ProductCard key={ product.id } product = { product } />
-        )
-        )}
-      
-    </div>
+          )
+          )}      
+        </Container>
+    </Container>
   )
 }
 
