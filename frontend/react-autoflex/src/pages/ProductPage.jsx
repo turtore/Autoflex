@@ -6,24 +6,15 @@ import productsAPI from '../services/productsAPI';
 import NavbarComponent from '../components/NavbarComponent';
 
 
-const requestAllProducts = async(setProducts) => {
-  const productsList = await productsAPI('GET-PRODUCTS');
-  setProducts(productsList.data);
-  console.log(productsList);
-}
-
 const ProductPage = () => {
 
-  const { setProducts, products } = useContext(Context)
+  const { products } = useContext(Context)
 
   const [inputsState, setInputsState] = useState({
     name: '',
     value: '',
   });
 
-  useEffect(() => {
-    requestAllProducts(setProducts);
-  }, [setProducts])
 
   const handleChange = ({ target: { name, value } }) => {
     setInputsState({

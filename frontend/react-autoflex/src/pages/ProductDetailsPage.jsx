@@ -5,6 +5,7 @@ import Context from '../context/Context';
 import NavbarComponent from '../components/NavbarComponent';
 import ingredientsAPI from '../services/ingredientsApi';
 import productsAPI from '../services/productsAPI';
+import IngredientCard from '../components/IngredientCard';
 
 
 const requestIngredients = async(setIngredients, id) => {
@@ -18,36 +19,37 @@ const requestProductInfo = async(setSelectedProduct, id) => {
   setSelectedProduct(product.data)
 }
 
+
 const ProductDetailsPage = () => {
 
   const [inputsState, setInputsState] = useState({
     materialId: '',
     quantity: '',
   });
-
+  
   const { setIngredients,
-          ingredients,
-          materials,
-          selectedProduct,
-          setSelectedProduct } = useContext(Context)
-
-  const { id } = useParams();
-
-
-  useEffect(() => {
-    requestIngredients(setIngredients, id);
-    requestProductInfo(setSelectedProduct, id)
+    ingredients,
+    materials,
+    selectedProduct,
+    setSelectedProduct } = useContext(Context)
+    
+    const { id } = useParams();
+    
+    
+    useEffect(() => {
+      requestIngredients(setIngredients, id)
+      requestProductInfo(setSelectedProduct, id)
   }, [setIngredients])
-
-
+  
+  
   const handleChange = ({ target: { name, value } }) => {
     setInputsState({
       ...inputsState,
       [name]: value,
     });
   };
-
-
+  
+  
   const handleClick = () => {
     const ingredient = {
       quantity: inputsState.quantity,
@@ -56,15 +58,9 @@ const ProductDetailsPage = () => {
     };
     ingredientsAPI('REGISTER-INGREDIENT', ingredient)
   }
+  
 
-  const handleDelete = (id) => {
-    ingredientsAPI('DELETE-INGREDIENT', id)
-  }
-
-  const logger = () => {
-    console.log(materials);
-  }
-
+  
   return (
     <Container>
       <NavbarComponent />
@@ -75,9 +71,6 @@ const ProductDetailsPage = () => {
         <h4> Id: {selectedProduct.id}  </h4>
         <h4> Name: {selectedProduct.name}  </h4>
         <h4> Value: {selectedProduct.value}  </h4>
-        <button
-        onClick={logger}
-        >LOG MATERIALS</button>
       </Container>
       
       <br />
@@ -111,40 +104,16 @@ const ProductDetailsPage = () => {
           >
             Register
           </Button>
-      </Container>
-        <br/>
+      </Container>        
+
       <Container>
         <FloatingLabel
-        label='Recipe'
+        label='Recipe:'
         />
-      <table>
-            <thead>
-              <tr>
-                <th>Id</th>
-                <th>quantity</th>
-                <th>Material Id</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              { ingredients.map((ingredient) => (
-                <tr key={ingredient.id}>
-                  <td>{ ingredient.quantity }</td>
-                  <td>{ ingredient.materialId }</td>
-                  <td>
-                    <Button
-                    type='button'
-                    onClick={ () => handleDelete(`${ingredient.id}`) }
-                    >
-                      Remove Ingredient
-                    </Button>
-                  </td>
-                </tr>                
-                )                
-              )}
-            </tbody>
-            
-          </table>
+      { ingredients.map((ingredient) => (
+        <IngredientCard key={ ingredient.id } ingredient = { ingredient } />
+        )
+        )}      
       </Container>
 
     </Container>
