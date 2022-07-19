@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Container, Button, Form, FloatingLabel } from 'react-bootstrap'
 import Context from '../context/Context'
 import NavbarComponent from '../components/NavbarComponent'
@@ -34,6 +34,10 @@ const MaterialPage = () => {
   const handleDelete = async (id) => {
     await materialsAPI('DELETE-MATERIAL', id)
     refreshAll()
+  }
+
+  const handleUpdate = async () => {
+    console.log('update');
   }
         
     
@@ -81,7 +85,9 @@ const MaterialPage = () => {
               <tr>
                 <th>Id</th>
                 <th>Name</th>
-                <th>Quantity</th>
+                <th>Stock</th>
+                <th>Update?</th>
+                <th>Delete?</th>
               </tr>
             </thead>
 
@@ -91,6 +97,13 @@ const MaterialPage = () => {
                   <td>{ material.id }</td>
                   <td>{ material.name }</td>
                   <td>{ material.quantity }</td>
+                  <td>
+                    <Button
+                      type='button'
+                      onClick={handleUpdate}>
+                      Update
+                    </Button>
+                  </td>
                   <td>
                     <Button
                     type='button'

@@ -95,8 +95,8 @@ const ProductDetailsPage = () => {
         <FloatingLabel
         label='Recipe:'
         />
-      { ingredients.map((ingredient) => (
-        <IngredientCard key={ ingredient.id } ingredient = { ingredient } />
+        { ingredients.map((ingredient) => (
+          <IngredientCard key={ ingredient.id } ingredient = { ingredient } />
         )
         )}      
       </Container>
