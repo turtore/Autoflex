@@ -1,37 +1,39 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Container, Button, Form, FloatingLabel } from 'react-bootstrap';
-import Context from '../context/Context';
-import NavbarComponent from '../components/NavbarComponent';
-import materialsAPI from '../services/materialsApi';
+import React, { useContext, useEffect, useState } from 'react'
+import { Container, Button, Form, FloatingLabel } from 'react-bootstrap'
+import Context from '../context/Context'
+import NavbarComponent from '../components/NavbarComponent'
+import materialsAPI from '../services/materialsApi'
 
 
 const MaterialPage = () => {
 
-  const { materials } = useContext(Context)
+  const { materials, refreshAll } = useContext(Context)
   
   const [inputsState, setInputsState] = useState({
     name: '',
     quantity: '',
-  });
+  })
 
     
   const handleChange = ({ target: { name, value } }) => {
     setInputsState({
       ...inputsState,
       [name]: value,
-    });
-  };
+    })
+  }
 
-  const handleClick = () => {
+  const handleClick = async () => {
     const material = {
       name: inputsState.name,
       quantity: inputsState.quantity,
-    };
-    materialsAPI('REGISTER-MATERIAL', material)
+    }
+    await materialsAPI('REGISTER-MATERIAL', material)
+    refreshAll()
   }
 
-  const handleDelete = (id) => {
-    materialsAPI('DELETE-MATERIAL', id)
+  const handleDelete = async (id) => {
+    await materialsAPI('DELETE-MATERIAL', id)
+    refreshAll()
   }
         
     
@@ -109,4 +111,4 @@ const MaterialPage = () => {
   )
 }
 
-export default MaterialPage;
+export default MaterialPage

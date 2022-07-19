@@ -1,6 +1,6 @@
 import React from 'react'
-import { Container } from 'react-bootstrap';
-import NavbarComponent from '../components/NavbarComponent';
+import { Container } from 'react-bootstrap'
+import NavbarComponent from '../components/NavbarComponent'
 
 
 const WelcomePage = () => {
@@ -15,4 +15,4 @@ const WelcomePage = () => {
   )
 }
 
-export default WelcomePage;
+export default WelcomePage

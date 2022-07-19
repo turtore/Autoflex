@@ -1,21 +1,28 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom'
 import './App.css';
 
 import WelcomePage from './pages/WelcomePage';
 import ProductPage from './pages/ProductPage';
 import MaterialPage from './pages/MaterialPage';
 import ProductDetailsPage from './pages/ProductDetailsPage';
+import Context from './context/Context';
 
 function App() {
   return (
-    <Switch>
-      <Route exact path="/" component={ WelcomePage } />
-      <Route exact path="/products" component={ ProductPage } />
-      <Route exact path="/products/:id" component={ ProductDetailsPage } />
-      <Route exact path="/materials" component={ MaterialPage } />
-    </Switch>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" exact element={ <WelcomePage /> } />
+        <Route path="/products" exact element={ <ProductPage /> } />
+        <Route path="/products/:id" exact element={ <ProductDetailsPage /> } />
+        <Route path="/materials" exact element={ <MaterialPage /> } />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

@@ -1,20 +1,21 @@
-import React, { useContext } from 'react';
-import Context from '../context/Context';
-import { Card, Button } from 'react-bootstrap';
-import ingredientsAPI from '../services/ingredientsApi';
+import React, { useContext } from 'react'
+import Context from '../context/Context'
+import { Card, Button } from 'react-bootstrap'
+import ingredientsAPI from '../services/ingredientsApi'
 
 
 const IngredientCard = ({ ingredient }) => {
 
-    const { materials } = useContext(Context)
+    const { materials, refreshIngredients } = useContext(Context)
 
   
-  const handleDelete = (id) => {
-    ingredientsAPI('DELETE-INGREDIENT', id)
+  const handleDelete = async (id, productId) => {
+    await ingredientsAPI('DELETE-INGREDIENT', id)
+    refreshIngredients(productId)
   }
 
   const changeAmount = (id) => {
-    console.log('this will change amount');
+    console.log('this will change amount')
   }
 
   const getMaterialName = (materialId) => {
@@ -43,15 +44,16 @@ const IngredientCard = ({ ingredient }) => {
           <br/>
           <Button
             type='button'
-            onClick={ () => handleDelete(`${ingredient.id}`) }
+            onClick={ () => handleDelete(`${ingredient.id}`, `${ingredient.productId}`) }
             >
             Delete
           </Button>
         </Card.Text>
       </Card.Body>
     </Card>
-  );
-};
+  )
+}
 
 
-export default IngredientCard;
+
+export default IngredientCard

@@ -1,15 +1,15 @@
-import React from 'react';
-import { Button, Container, Navbar } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import React from 'react'
+import { Button, Container, Navbar } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
 
 
 const NavbarComponent = () => {
   
-  const history = useHistory()
+  const navigate = useNavigate()
 
   
   const goToPage = (toPage) => {
-    history.push(toPage)
+    navigate(toPage)
 }
 
   return (
@@ -29,8 +29,8 @@ const NavbarComponent = () => {
         </Button>
       </Navbar>
     </Container>
-  );
-};
+  )
+}
 
 
-export default NavbarComponent;
+export default NavbarComponent
