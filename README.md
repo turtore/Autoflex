@@ -25,7 +25,7 @@ Nota: foi adicionada política de CORS ao backend em application.properties para
 
 ### Estágio de desenvolvimento:
 #### 1. Tabelas SQL
-tabelas sql: (./images/sql-sample.png)
+tabelas sql: ![sql](./images/sql-sample.png)
 1.1 [x]  Banco SQL - Tabelas
 1.2 [x]  Banco SQL - Regras de negócio Tabelas
 1.3 [x]  Banco SQL - Insert de dados para testes
