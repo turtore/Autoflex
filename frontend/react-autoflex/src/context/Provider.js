@@ -7,7 +7,6 @@ import ingredientsAPI from '../services/ingredientsApi'
 
 const requestAllProducts = async(setProducts) => {
   const productsList = await productsAPI('GET-PRODUCTS')
-  console.log(productsList)
   setProducts(productsList.data)
 }
 
