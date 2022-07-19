@@ -1,6 +1,6 @@
-import React from 'react';
-import { Button, Container, Navbar } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import React from 'react'
+import { Button, Container, Navbar } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
 
 
 const NavbarComponent = () => {
@@ -29,8 +29,8 @@ const NavbarComponent = () => {
         </Button>
       </Navbar>
     </Container>
-  );
-};
+  )
+}
 
 
-export default NavbarComponent;
+export default NavbarComponent

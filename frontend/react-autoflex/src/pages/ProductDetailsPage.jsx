@@ -1,23 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Button, Container, FloatingLabel, Form } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
-import Context from '../context/Context';
-import NavbarComponent from '../components/NavbarComponent';
-import ingredientsAPI from '../services/ingredientsApi';
-import productsAPI from '../services/productsAPI';
-import IngredientCard from '../components/IngredientCard';
-
-
-const requestIngredients = async(setIngredients, id) => {
-  const ingredients = await ingredientsAPI('GET-INGREDIENTS', id)
-  setIngredients(ingredients.data)
-
-}
-
-const requestProductInfo = async(setSelectedProduct, id) => {
-  const product = await productsAPI('GET-PRODUCT-ID', id)
-  setSelectedProduct(product.data)
-}
+import React, { useState, useContext, useEffect } from 'react'
+import { Button, Container, FloatingLabel, Form } from 'react-bootstrap'
+import { useParams } from 'react-router-dom'
+import Context from '../context/Context'
+import NavbarComponent from '../components/NavbarComponent'
+import ingredientsAPI from '../services/ingredientsApi'
+import IngredientCard from '../components/IngredientCard'
 
 
 const ProductDetailsPage = () => {
@@ -25,19 +12,18 @@ const ProductDetailsPage = () => {
   const [inputsState, setInputsState] = useState({
     materialId: '',
     quantity: '',
-  });
+  })
   
   const { setIngredients,
     ingredients,
     selectedProduct,
-    setSelectedProduct } = useContext(Context)
+    refreshIngredients } = useContext(Context)
     
-    const { id } = useParams();
+    const { id } = useParams()
     
     
     useEffect(() => {
-      requestIngredients(setIngredients, id)
-      requestProductInfo(setSelectedProduct, id)
+      refreshIngredients(id)
   }, [setIngredients])
   
   
@@ -45,20 +31,20 @@ const ProductDetailsPage = () => {
     setInputsState({
       ...inputsState,
       [name]: value,
-    });
-  };
+    })
+  }
   
   
-  const handleClick = () => {
+  const handleRegister = async () => {
     const ingredient = {
       quantity: inputsState.quantity,
       materialId: inputsState.materialId,
       productId: id
-    };
-    ingredientsAPI('REGISTER-INGREDIENT', ingredient)
+    }
+    await ingredientsAPI('REGISTER-INGREDIENT', ingredient)
+    refreshIngredients(id);
   }
   
-
   
   return (
     <Container>
@@ -99,7 +85,7 @@ const ProductDetailsPage = () => {
           </Form>
         
           <Button
-            onClick={handleClick}
+            onClick={handleRegister}
           >
             Register
           </Button>

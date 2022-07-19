@@ -1,35 +1,36 @@
-import React, { useContext, useState } from 'react';
-import { Container, Button, Form, FloatingLabel } from 'react-bootstrap';
-import ProductCard from '../components/ProductCard';
-import Context from '../context/Context';
-import productsAPI from '../services/productsAPI';
-import NavbarComponent from '../components/NavbarComponent';
+import React, { useContext, useState } from 'react'
+import { Container, Button, Form, FloatingLabel } from 'react-bootstrap'
+import ProductCard from '../components/ProductCard'
+import Context from '../context/Context'
+import productsAPI from '../services/productsAPI'
+import NavbarComponent from '../components/NavbarComponent'
 
 
 const ProductPage = () => {
 
-  const { products } = useContext(Context)
+  const { products, refreshAll } = useContext(Context)
 
   const [inputsState, setInputsState] = useState({
     name: '',
     value: '',
-  });
+  })
 
 
   const handleChange = ({ target: { name, value } }) => {
     setInputsState({
       ...inputsState,
       [name]: value,
-    });
-  };
+    })
+  }
 
-  const handleClick = () => {
+  const handleClick = async () => {
     const product = {
       name: inputsState.name,
       value: inputsState.value,
-    };
-    productsAPI('REGISTER-PRODUCT', product)
+    }
+    await productsAPI('REGISTER-PRODUCT', product)
     setInputsState({name:'', value:''})
+    refreshAll()
   }
 
 
@@ -81,4 +82,4 @@ const ProductPage = () => {
   )
 }
 
-export default ProductPage;
+export default ProductPage

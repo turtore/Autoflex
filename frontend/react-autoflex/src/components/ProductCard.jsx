@@ -1,10 +1,13 @@
-import React from 'react';
-import { Card, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import productsAPI from '../services/productsAPI';
+import React, { useContext } from 'react'
+import { Card, Button } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
+import Context from '../context/Context'
+import productsAPI from '../services/productsAPI'
 
 
 const ProductCard = ({ product }) => {
+
+  const { refreshAll } = useContext(Context)
 
   const navigate = useNavigate()
 
@@ -12,9 +15,9 @@ const ProductCard = ({ product }) => {
     navigate(`/products/${id}`)
   }
 
-  const handleDelete = (id) => {
-    productsAPI('DELETE-PRODUCT', id)
-
+  const handleDelete = async (id) => {
+    await productsAPI('DELETE-PRODUCT', id)
+    refreshAll()
   }
   
 
@@ -41,8 +44,8 @@ const ProductCard = ({ product }) => {
         </Button>
       </Card.Body>
     </Card>
-  );
-};
+  )
+}
 
 
-export default ProductCard;
+export default ProductCard
