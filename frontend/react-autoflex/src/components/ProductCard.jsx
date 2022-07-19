@@ -3,6 +3,7 @@ import { Card, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import productsAPI from '../services/productsAPI';
 
+
 const ProductCard = ({ product }) => {
 
   const history = useHistory()
@@ -18,29 +19,26 @@ const ProductCard = ({ product }) => {
   
 
   return (
-    <Card className="product-card"
-      onClick={() => goToDetails(`${product.id}`)}
-    >
+    <Card className="product-card">
       <Card.Body>
         <Button>
-
-        <Card.Title>
-          name: { product.name }
-        </Card.Title>
-        <Card.Text>
-          id: { product.id }
-        </Card.Text>
-        <Card.Text>
-          value: { product.value }
-        </Card.Text>
-
-        <Button
-          type='button'
-          onClick={ () => handleDelete(`${product.id}`) }
-          >
-          Delete
+          <Button
+          onClick={() => goToDetails(`${product.id}`)}
+          > 
+            Ingredients
+          </Button>
+          <Card.Title>
+            [id: { product.id }] { product.name }
+            <br/>
+            Value: { product.value }
+          </Card.Title>
+          <Button
+            type='button'
+            onClick={ () => handleDelete(`${product.id}`) }
+            >
+              Delete
+          </Button>
         </Button>
-            </Button>
       </Card.Body>
     </Card>
   );

@@ -29,6 +29,7 @@ const ProductPage = () => {
       value: inputsState.value,
     };
     productsAPI('REGISTER-PRODUCT', product)
+    setInputsState({name:'', value:''})
   }
 
 

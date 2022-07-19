@@ -7,14 +7,13 @@ import productsAPI from '../services/productsAPI';
 const requestAllProducts = async(setProducts) => {
   const productsList = await productsAPI('GET-PRODUCTS');
   setProducts(productsList.data);
-  console.log(productsList);
 }
 
 const requestAllMaterials = async(setMaterials) => {
   const materials = await materialsAPI('GET-MATERIALS');
   setMaterials(materials.data);
-  console.log(materials);
 }
+
 
 function Provider({ children }) {
   const [products, setProducts] = useState([]);

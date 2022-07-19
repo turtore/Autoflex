@@ -29,7 +29,6 @@ const ProductDetailsPage = () => {
   
   const { setIngredients,
     ingredients,
-    materials,
     selectedProduct,
     setSelectedProduct } = useContext(Context)
     

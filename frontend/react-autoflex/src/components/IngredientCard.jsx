@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import Context from '../context/Context';
 import { Card, Button } from 'react-bootstrap';
 import ingredientsAPI from '../services/ingredientsApi';
