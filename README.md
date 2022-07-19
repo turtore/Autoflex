@@ -26,38 +26,53 @@ Nota: foi adicionada política de CORS ao backend em application.properties para
 ### Estágio de desenvolvimento:
 #### 1. Tabelas SQL
 tabelas sql: ![sql](./images/sql-sample.png)
+
 1.1 [x]  Banco SQL - Tabelas
+
 1.2 [x]  Banco SQL - Regras de negócio Tabelas
+
 1.3 [x]  Banco SQL - Insert de dados para testes
-tabelas sql: (./images/sql-sample.png)
 
 1.4 [x]  docker-compose para banco de dados
 
 #### 2. Backend
+
 2.1 [x]  Backend - Build
+
 2.2 [x]  Backend - endpoints Product
+
 2.3 [x]  Backend - endpoints Material
+
 2.4 [x]  Backend - endpoints Ingredient
+
 2.5 [x]  Backend - exceptions
+
 2.6 [ ] Backend - Testes [INCOMPLETOS, falta subir banco em memória]
 
 2.7 [ ] docker-compose para backend
 
 #### 3. Frontend
+
 3.1 [x]  Frontend - Build
+
 3.2 [x]  Frontend - Jquery
+
 3.3 [x]  Frontend - Redux Provider
+
 3.4 [x]  Frontend - API services
 
-
 3.5 [x]  Frontend - Componente de navegação NavbarComponent
+
 3.6 [ ] Frontend - Footer
+
 3.7 [ ] Frontend - page Product (falta configurar ação de put(editar) e respectiva interface)
+
 3.8 [ ] Frontend - page Material (falta configurar ação de put(editar) e respectiva interface)
+
 3.9 [x]  Frontend - page Welcome ('/')
 
-
 3.10 [x]  Frontend - component ProductCard
+
 3.11 [ ] Frontend - component IngredientCard (falta configurar ação de put(editar) e respectiva interface)
 
 3.12 [ ] Frontend - style (css)
