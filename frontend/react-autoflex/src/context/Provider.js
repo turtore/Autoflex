@@ -6,6 +6,7 @@ import productsAPI from '../services/productsAPI';
 
 const requestAllProducts = async(setProducts) => {
   const productsList = await productsAPI('GET-PRODUCTS');
+  console.log(productsList);
   setProducts(productsList.data);
 }
 
