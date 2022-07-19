@@ -19,6 +19,12 @@ export default async function materialsAPI(caseInput, bodyValue) {
     });
     return materials;
   }
+  case 'GET-MATERIAL-ID': {
+    const materials = await axios({ method: 'get',
+      url: `http://localhost:8080/materials/${bodyValue}`,
+    });
+    return materials;
+  }
   case 'DELETE-MATERIAL': {
     const deleted = await axios({ method: 'delete',
     url: `http://localhost:8080/materials/${bodyValue}`,

@@ -1,4 +1,68 @@
-#Em desenvolvimento .. prazo 18/11
+** Em desenvolvimento .. **
+#Como executar a aplicação no estado atual:
+pre-requisitos:
+- docker e docker-compose
+- quarkus
+- npm e node
+
+1. Rodar o container com o banco SQL configurado utilizando os scripts da pasta /sql. comando:
+`docker-compose up`
+
+2. Acessar o diretório do backend (backend/quarkus-reactive-sql-client/)
+comando:
+`mvn quarkus:dev`
+
+
+3. Acessar o diretório do frontend (frontend/react-autoflex/), instalar as dependências.
+comando:
+`npm install`
+`npm start`
+
+4. a aplicação ficará disponível em http://localhost:8080/ .
+
+Nota: foi adicionada política de CORS ao backend em application.properties para rodar localmente.
+
+### Estágio de desenvolvimento:
+#### Tabelas SQL
+<input type="checkbox" checked> Banco SQL - Tabelas
+<input type="checkbox" checked> Banco SQL - Regras de negócio Tabelas
+<input type="checkbox" checked> Banco SQL - Insert de dados para testes
+
+<input type="checkbox" checked> docker-compose para banco de dados
+
+#### Backend
+<input type="checkbox" checked> Backend - Build
+<input type="checkbox" checked> Backend - endpoints Product
+<input type="checkbox" checked> Backend - endpoints Material
+<input type="checkbox" checked> Backend - endpoints Ingredient
+<input type="checkbox" checked> Backend - exceptions
+<input type="checkbox"> Backend - Testes [INCOMPLETOS, falta subir banco em memória]
+
+<input type="checkbox" > docker-compose para backend
+
+#### Frontend
+<input type="checkbox" checked> Frontend - Build
+<input type="checkbox" checked> Frontend - Jquery
+<input type="checkbox" checked> Frontend - Redux Provider
+<input type="checkbox" checked> Frontend - API services
+
+
+<input type="checkbox" checked> Frontend - Componente de navegação NavbarComponent
+<input type="checkbox" > Frontend - Footer
+<input type="checkbox" > Frontend - page Product (falta configurar ação de put(editar) e respectiva interface)
+<input type="checkbox" > Frontend - page Material (falta configurar ação de put(editar) e respectiva interface)
+<input type="checkbox" checked> Frontend - page Welcome ('/')
+
+
+<input type="checkbox" checked> Frontend - component ProductCard
+<input type="checkbox" > Frontend - component IngredientCard (falta configurar ação de put(editar) e respectiva interface)
+
+<input type="checkbox"> Frontend - style (css)
+
+<input type="checkbox"> some Frontend Tests (Cypress)
+
+<input type="checkbox" > docker-compose para frontend
+
 
 # Teste Prático - Autoflex
 

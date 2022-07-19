@@ -4,24 +4,16 @@ import Context from '../context/Context';
 import NavbarComponent from '../components/NavbarComponent';
 import materialsAPI from '../services/materialsApi';
 
-const requestAllMaterials = async(setMaterials) => {
-  const materials = await materialsAPI('GET-MATERIALS');
-  setMaterials(materials.data);
-  console.log(materials);
-}
 
 const MaterialPage = () => {
 
-  const { setMaterials, materials } = useContext(Context)
+  const { materials } = useContext(Context)
   
   const [inputsState, setInputsState] = useState({
     name: '',
     quantity: '',
   });
 
-  useEffect(() => {
-    requestAllMaterials(setMaterials);
-  }, [setMaterials])
     
   const handleChange = ({ target: { name, value } }) => {
     setInputsState({
