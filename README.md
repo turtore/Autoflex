@@ -1,21 +1,27 @@
-** Em desenvolvimento .. **
-#Como executar a aplicação no estado atual:
+**Em desenvolvimento ..**
+## Como executar a aplicação no estado atual:
 pre-requisitos:
 - docker e docker-compose
 - quarkus
 - npm e node
 
+## Passos:
+
 1. Rodar o container com o banco SQL configurado utilizando os scripts da pasta /sql. comando:
+
 `docker-compose up`
 
 2. Acessar o diretório do backend (backend/quarkus-reactive-sql-client/)
 comando:
+
 `mvn quarkus:dev`
 
 
 3. Acessar o diretório do frontend (frontend/react-autoflex/), instalar as dependências.
 comando:
+
 `npm install`
+
 `npm start`
 
 4. a aplicação ficará disponível em http://localhost:8080/ .
@@ -23,45 +29,58 @@ comando:
 Nota: foi adicionada política de CORS ao backend em application.properties para rodar localmente.
 
 ### Estágio de desenvolvimento:
-#### Tabelas SQL
-<input type="checkbox" checked> Banco SQL - Tabelas
-<input type="checkbox" checked> Banco SQL - Regras de negócio Tabelas
-<input type="checkbox" checked> Banco SQL - Insert de dados para testes
+#### 1. Tabelas SQL
+1.1 [x]  Banco SQL - Tabelas
 
-<input type="checkbox" checked> docker-compose para banco de dados
+1.2 [x]  Banco SQL - Regras de negócio Tabelas
 
-#### Backend
-<input type="checkbox" checked> Backend - Build
-<input type="checkbox" checked> Backend - endpoints Product
-<input type="checkbox" checked> Backend - endpoints Material
-<input type="checkbox" checked> Backend - endpoints Ingredient
-<input type="checkbox" checked> Backend - exceptions
-<input type="checkbox"> Backend - Testes [INCOMPLETOS, falta subir banco em memória]
+1.3 [x]  Banco SQL - Insert de dados para testes
 
-<input type="checkbox" > docker-compose para backend
+1.4 [x]  docker-compose para banco de dados
 
-#### Frontend
-<input type="checkbox" checked> Frontend - Build
-<input type="checkbox" checked> Frontend - Jquery
-<input type="checkbox" checked> Frontend - Redux Provider
-<input type="checkbox" checked> Frontend - API services
+#### 2. Backend
+2.1 [x]  Backend - Build
 
+2.2 [x]  Backend - endpoints Product
 
-<input type="checkbox" checked> Frontend - Componente de navegação NavbarComponent
-<input type="checkbox" > Frontend - Footer
-<input type="checkbox" > Frontend - page Product (falta configurar ação de put(editar) e respectiva interface)
-<input type="checkbox" > Frontend - page Material (falta configurar ação de put(editar) e respectiva interface)
-<input type="checkbox" checked> Frontend - page Welcome ('/')
+2.3 [x]  Backend - endpoints Material
 
+2.4 [x]  Backend - endpoints Ingredient
 
-<input type="checkbox" checked> Frontend - component ProductCard
-<input type="checkbox" > Frontend - component IngredientCard (falta configurar ação de put(editar) e respectiva interface)
+2.5 [x]  Backend - exceptions
 
-<input type="checkbox"> Frontend - style (css)
+2.6 [ ] Backend - Testes [INCOMPLETOS, falta subir banco em memória]
 
-<input type="checkbox"> some Frontend Tests (Cypress)
+2.7 [ ] docker-compose para backend
 
-<input type="checkbox" > docker-compose para frontend
+#### 3. Frontend
+3.1 [x]  Frontend - Build
+
+3.2 [x]  Frontend - Jquery
+
+3.3 [x]  Frontend - Redux Provider
+
+3.4 [x]  Frontend - API services
+
+3.5 [x]  Frontend - Componente de navegação NavbarComponent
+
+3.6 [ ] Frontend - Footer
+
+3.7 [ ] Frontend - page Product (falta configurar ação de put(editar) e respectiva interface)
+
+3.8 [ ] Frontend - page Material (falta configurar ação de put(editar) e respectiva interface)
+
+3.9 [x]  Frontend - page Welcome ('/')
+
+3.10 [x]  Frontend - component ProductCard
+
+3.11 [ ] Frontend - component IngredientCard (falta configurar ação de put(editar) e respectiva interface)
+
+3.12 [ ] Frontend - style (css)
+
+3.13 [ ] some Frontend Tests (Cypress)
+
+3.14 [ ] docker-compose para frontend
 
 
 # Teste Prático - Autoflex
